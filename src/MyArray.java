@@ -63,7 +63,17 @@ public class MyArray {
             int sum = 0;
             int count = 0;
             int left = Math.max(missingValue - k, 0);
-            int right = Math.min(missingValue + k, arr.length - 1);
+            int right;
+            if (missingValue + k > arr.length - 1) {
+                right = arr.length - 1;
+                left = right - k;
+            } else {
+                right = missingValue + k;
+            }
+            if (missingValue - k < 0) {
+                left = 0;
+                right = left + k;
+            }
             for (int j = left; j <= right; j++) {
                 if (arr[j] != -1) {
                     sum += arr[j];
@@ -77,12 +87,13 @@ public class MyArray {
     }
 
     public static void main(String[] args) {
-        MyArray myArray = new MyArray(new int[]{10, 11, 12, -1, 14, 10, 17, 19, 20});
+//        MyArray myArray = new MyArray(new int[]{10, 11, 12, -1, 14, 10, 17, 19, 20});
+        MyArray myArray = new MyArray(new int[]{1, 11, 1, 1, 14, 10, 1, -1, 1});
         MyArray myArray2 = new MyArray(new int[]{10, 11, 12, 13, 14, 16, 17, 19, 20});
         System.out.println(Arrays.toString(myArray.mirror()));
         System.out.println(Arrays.toString(myArray.removeDuplicates()));
         System.out.println(Arrays.toString(myArray2.getMissingValues()));
-        System.out.println(Arrays.toString(myArray.fillMissingValues(5)));
+        System.out.println(Arrays.toString(myArray.fillMissingValues(3)));
     }
 
 
