@@ -1,3 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
 public class MyCaesar {
 
     public static final char[] ALPHABET = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -55,11 +62,52 @@ public class MyCaesar {
         return result.toString();
     }
 
-    public static void main(String[] args) {
-        MyCaesar myCaeser = new MyCaesar(22);
-        System.out.println(myCaeser.encryptChar('2'));
-        System.out.println(myCaeser.decryptChar(myCaeser.encryptChar('2')));
-        System.out.println(myCaeser.encrypt("HELLO WORLD 1234567890"));
-        System.out.println(myCaeser.decrypt(myCaeser.encrypt("HELLO WORLD 1234567890")));
+    public void encrypt(String srcFile, String desFile) {
+        try {
+            File myObj = new File(srcFile);
+            Scanner myReader = new Scanner(myObj);
+            StringBuilder data = new StringBuilder();
+            while (myReader.hasNextLine()) {
+                data.append(myReader.nextLine());
+                data.append("\n");
+            }
+            try {
+                Files.writeString(Paths.get(desFile), encrypt(data.toString()));
+                System.out.println("done");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("You should have absolute path");
+            throw new RuntimeException(e);
+        }
     }
+
+    public void decrypt(String srcFile, String desFile) {
+        try {
+            File myObj = new File(srcFile);
+            Scanner myReader = new Scanner(myObj);
+            StringBuilder data = new StringBuilder();
+            while (myReader.hasNextLine()) {
+                data.append(myReader.nextLine());
+                data.append("\n");
+            }
+            try {
+                Files.writeString(Paths.get(desFile), decrypt(data.toString()));
+                System.out.println("done");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("You should have absolute path");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        // testing in other class
+    }
+
 }
