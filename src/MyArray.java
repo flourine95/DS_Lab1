@@ -49,59 +49,40 @@ public class MyArray {
     }
 
     public int[] fillMissingValues(int k) {
+        // Tìm vị trí của các giá trị bị thiếu
+        List<Integer> missingValues = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == -1) {
-                int left = i - k / 2;
-                int right = i + k / 2;
-                if (k % 2 == 0) {
-                    if (left < 0) {
-                        left = 0;
-                        right = k;
-                    }
-                    if (right > arr.length - 1) {
-                        left = arr.length - k - 1;
-                        right = arr.length - 1;
-                    }
-                    arr[i] = (int) averageOfTotal(left, right, k);
-                } else {
-                    int subLeft = left - 1;
-                    int incRight = right + 1;
-                    if (subLeft < 0) {
-                        subLeft = 0;
-                        right = k;
-                    }
-                    if (incRight > arr.length - 1) {
-                        left = arr.length - k - 1;
-                        incRight = arr.length - 1;
-                    }
-                    if (i == 0) {
-                        arr[i] = (int) averageOfTotal(1, right, k);
-                    } else if (i == arr.length - 1) {
-                        arr[i] = (int) averageOfTotal(arr.length - 1 - k, arr.length - 1, k);
-                    } else {
-                        arr[i] = (int) Math.min(averageOfTotal(subLeft, right, k), averageOfTotal(left, incRight, k));
-                    }
-                }
+                missingValues.add(i);
             }
         }
+
+        // Duyệt qua các giá trị bị thiếu
+        for (Integer missingValue : missingValues) {
+            // Tính trung bình nhỏ nhất của k giá trị gần nhất
+            int sum = 0;
+            int count = 0;
+            int left = Math.max(missingValue - k, 0);
+            int right = Math.min(missingValue + k, arr.length - 1);
+            for (int j = left; j <= right; j++) {
+                if (arr[j] != -1) {
+                    sum += arr[j];
+                    count++;
+                }
+            }
+            arr[missingValue] = sum / Math.max(count, 1);
+        }
+
         return arr;
     }
 
-    public float averageOfTotal(int start, int end, int k) {
-        int sum = 0;
-        for (int j = start; j <= end; j++) {
-            sum += arr[j];
-        }
-        return (float) (sum + 1) / k;
-    }
-
     public static void main(String[] args) {
-        MyArray myArray = new MyArray(new int[]{10, 11, 12, 13, 14, 16, 17, 19, 20});
+        MyArray myArray = new MyArray(new int[]{10, 11, 12, -1, 14, 10, 17, 19, 20});
         MyArray myArray2 = new MyArray(new int[]{10, 11, 12, 13, 14, 16, 17, 19, 20});
         System.out.println(Arrays.toString(myArray.mirror()));
         System.out.println(Arrays.toString(myArray.removeDuplicates()));
         System.out.println(Arrays.toString(myArray2.getMissingValues()));
-        System.out.println(Arrays.toString(myArray.fillMissingValues(3)));
+        System.out.println(Arrays.toString(myArray.fillMissingValues(5)));
     }
 
 
