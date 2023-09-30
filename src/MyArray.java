@@ -62,17 +62,17 @@ public class MyArray {
             // Tính trung bình nhỏ nhất của k giá trị gần nhất
             int sum = 0;
             int count = 0;
-            int left = Math.max(missingValue - k, 0);
+            int left;
             int right;
             if (missingValue + k > arr.length - 1) {
                 right = arr.length - 1;
                 left = right - k;
-            } else {
-                right = missingValue + k;
-            }
-            if (missingValue - k < 0) {
+            } else if (missingValue - k < 0) {
                 left = 0;
                 right = left + k;
+            } else {
+                left = missingValue - k;
+                right = missingValue + k;
             }
             for (int j = left; j <= right; j++) {
                 if (arr[j] != -1) {
