@@ -61,7 +61,7 @@ public class MyArray {
         for (Integer missingValue : missingValues) {
             // nếu k == 1 thì kiểm tra xem phần tử kế bên nào nhỏ hơn thì lấy
             if (k == 1) {
-                arr[1] = Math.min(arr[Math.max(missingValue - 1, 0)], arr[Math.min(missingValue + 1, arr.length - 1)]);
+                arr[missingValue] = Math.min(arr[Math.max(missingValue - 1, 0)], arr[Math.min(missingValue + 1, arr.length - 1)]);
             }
             // Tính trung bình nhỏ nhất của k giá trị gần nhất
             int sum = 0;
@@ -92,7 +92,7 @@ public class MyArray {
 
     public static void main(String[] args) {
 //        MyArray myArray = new MyArray(new int[]{10, 11, 12, -1, 14, 10, 17, 19, 20});
-        MyArray myArray = new MyArray(new int[]{1, -1, 3, 4, 5, 6, 7, 8, 9});
+        MyArray myArray = new MyArray(new int[]{1, 3, -1, 4, 5, 6, 7, 8, 9});
         MyArray myArray2 = new MyArray(new int[]{10, 11, 12, 13, 14, 16, 17, 19, 20});
         System.out.println(Arrays.toString(myArray.mirror()));
         System.out.println(Arrays.toString(myArray.removeDuplicates()));
