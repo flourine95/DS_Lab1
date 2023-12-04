@@ -28,14 +28,23 @@ public class MyArray {
     }
 
     public int[] removeDuplicates() {
-        List<Integer> list = new ArrayList<>();
-        for (int i : arr) {
-            if (!list.contains(i)) {
-                list.add(i);
+        int index = 0;
+        int[] arrNew = new int[arr.length];
+        for (int value : arr) {
+            boolean isDuplicate = false;
+            for (int j = 0; j < index; j++) {
+                if (value == arr[j]) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+            if (!isDuplicate) {
+                arrNew[index++] = value;
             }
         }
-        return toArray(list);
-
+        int[] res = new int[index];
+        System.arraycopy(arrNew, 0, res, 0, res.length);
+        return res;
     }
 
     public int[] getMissingValues() {
@@ -90,15 +99,7 @@ public class MyArray {
         return arr;
     }
 
-    public static void main(String[] args) {
-//        MyArray myArray = new MyArray(new int[]{10, 11, 12, -1, 14, 10, 17, 19, 20});
-        MyArray myArray = new MyArray(new int[]{1, 3, -1, 4, 5, 6, 7, 8, 9});
-        MyArray myArray2 = new MyArray(new int[]{10, 11, 12, 13, 14, 16, 17, 19, 20});
-        System.out.println(Arrays.toString(myArray.mirror()));
-        System.out.println(Arrays.toString(myArray.removeDuplicates()));
-        System.out.println(Arrays.toString(myArray2.getMissingValues()));
-        System.out.println(Arrays.toString(myArray.fillMissingValues(1)));
-    }
+
 
 
 }
